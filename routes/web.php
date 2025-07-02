@@ -1,15 +1,29 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
 
-// Route::get('/', function () {
-//     return view(view: 'welcome');
-// });
-Route::get(uri: '/', action: function(): Factory|view {
-    return view(view: 'welcome');
+Route::get('/', function (): Factory|View {
+    return view('welcome');
 });
-Route::get(uri: '/about', action: function(): Factory|view {
-    $name = "Babran";
 
-    return view(view: 'about')->with(key: 'name', value: $name );
+Route::get('/about', function (): Factory|View {
+    $name = "Babran";
+    $departments = [
+        '1' => 'Technical',
+        '2' => 'Financial',
+        '3' => 'Sales',
+    ];
+    return view('about', compact('name', 'departments'));
+});
+
+Route::post('/about', function (): Factory|View {
+    $name = request('name');
+    $departments = [
+        '1' => 'Technical',
+        '2' => 'Financial',
+        '3' => 'Sales',
+    ];
+    return view('about', compact('name', 'departments'));
 });
